@@ -4,11 +4,12 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Vuepress Docs Boilerplate',
+  title: 'TMR4222 Marine Machinery - Viscous Flow in Pipes',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
   description: description,
+  base: '/',
 
   /**
    * Extra tags to be injected to the page HTML `<head>`
@@ -32,32 +33,18 @@ module.exports = {
     docsDir: '',
     editLinkText: '',
     lastUpdated: false,
-    nav: [
+    sidebar: [
       {
-        text: 'Guide',
-        link: '/guide/',
+        title: 'Introduction',
+        path: '/',
+        collapsable: false,
       },
       {
-        text: 'Config',
-        link: '/config/'
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
+        title: 'Python with Anaconda',
+        path: '/python-with-anaconda/',
+        collapsable: false
       }
-    ],
-    sidebar: {
-      '/guide/': [
-        {
-          title: 'Guide',
-          collapsable: false,
-          children: [
-            '',
-            'using-vue',
-          ]
-        }
-      ],
-    }
+    ]
   },
 
   /**
