@@ -1,0 +1,19 @@
+{
+  "name": "docs_for_tmr4222",
+  "version": "0.0.1",
+  "description": "Documentation for TMR4222 Viscous Flow in Pipe",
+  "main": "index.js",
+  "authors": {
+    "name": "Kevin Koosup Yum",
+    "email": "kevinkoosup.yum@sintef.no"
+  },
+  "repository": "https://github.com/kevinksyTRD/TMR4222_2023S.git/Docs for TMR4222",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}
