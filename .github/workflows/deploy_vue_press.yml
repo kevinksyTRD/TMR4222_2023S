@@ -28,7 +28,7 @@ jobs:
       - name: vuepress-deploy
         uses: jenkey2011/vuepress-deploy@master
         env:
-          ACCESS_TOKEN: ${{ secrets.PERSONALACCESSTOKEN }}
+          ACCESS_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           TARGET_REPO: kevinksyTRD/TMR4222_2023S
           TARGET_BRANCH: main
           BUILD_SCRIPT: |
