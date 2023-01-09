@@ -35,4 +35,4 @@ jobs:
             cd docs
             yarn install
             yarn build
-          BUILD_DIR: docs/src/.vuepress/dist
+          BUILD_DIR: src/.vuepress/dist
