@@ -31,5 +31,8 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.PERSONALACCESSTOKEN }}
           TARGET_REPO: kevinksyTRD/TMR4222_2023S
           TARGET_BRANCH: main
-          BUILD_SCRIPT: yarn && yarn docs:build
-          BUILD_DIR: docs/.vuepress/dist
+          BUILD_SCRIPT: |
+            cd docs
+            yarn install
+            yarn build
+          BUILD_DIR: docs/src/.vuepress/dist
