@@ -43,7 +43,27 @@ module.exports = {
         title: 'Python with Anaconda',
         path: '/python-with-anaconda/',
         collapsable: false
-      }
+      },
+      {
+        title: 'Jupyter Notebook',
+        path: '/jupyter-notebook/',
+        collapsable: false
+      },
+      {
+        title: 'Fluids Package',
+        path: '/fluids/',
+        collapsable: false
+      },
+      {
+        title: 'Pump Analysis',
+        path: '/pump-analysis/',
+        collapsable: false
+      },
+      {
+        title: 'Pipe Network Analysis',
+        path: '/pipe-network-analysis/',
+        collapsable: false
+      },
     ]
   },
 
