@@ -1,1 +1,6 @@
-
+pandas~=1.5.2
+plotly~=5.11.0
+scipy~=1.10.0
+fluids~=1.0.22
+pyfluids~=2.3.2
+pint=~=0.20.1
