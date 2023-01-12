@@ -22,13 +22,13 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['script',
       {
-        type: 'text/javascript async',
+        type: '"text/javascript async" async',
         src: "https://polyfill.io/v3/polyfill.js?features=es6"
       }
     ],
     ['script',
       {
-        type: 'text/javascript async',
+        type: '"text/javascript async" async',
         src: "https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"
       }
     ]
