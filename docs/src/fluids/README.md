@@ -4,7 +4,7 @@ First, we will import the necessary packages to solve the problems.
 
 
 
-```
+```python
 from fluids import friction, core, fittings
 from fluids.piping import nearest_pipe
 from pyfluids import Fluid, FluidsList, Input
@@ -15,7 +15,11 @@ from scipy.optimize import root_scalar
 ## 1. Water flow
 Water at 30<sup>o</sup>C flows through a 20m length of 50mm steel pipe (smooth wall) of Sch. 40 at a flow rate of 200 liter per min. Calculate the Reynolds number and friction factor. What is the pressure drop and head loss in the pipe?
 
+
+<p style="text-align: center;">
 ============== Answer ==============
+</p>
+
 
 We will use the following equations to get the answers.
 
@@ -30,7 +34,7 @@ $$
 The density (\\(\rho\\)) and dynamic viscosity (\\(\mu\\)) of water can be obtained using `pyfluids` package which is a wrapper for `CoolProp`.
 
 
-```
+```python
 # Following is given from the problem:
 temp_water_deg_C = 30
 length_pipe_m = 20
@@ -92,7 +96,7 @@ print(f"pressure drop is {p_drop:.0f} Pa")
 We can try an API from `fluids` to get the same answer .
 
 
-```
+```python
 mass_flow_kg_per_s = flow_m3_per_s * water.density
 p_drop = friction.one_phase_dP(
     m=mass_flow_kg_per_s,
@@ -114,7 +118,11 @@ print(f"Head loss from API is: {head_loss:.3f} m")
 ## 2. Find flow from the pressure drop
 We measured the pressure drop of the pipe and we found it to be 25000 Pa. What is the flow in the pipe? 
 
+
+<p style="text-align: center;">
 ============== Answer ==============
+</p>
+
 
 Finding flow from the pressure drop is not a trivial problem because the function to solve is non-linear implicit equation.
 
@@ -137,7 +145,7 @@ V = \sqrt{\Delta p \cdot \frac{2D_i}{f_d \rho L} }
 $$
 
 
-```
+```python
 p_drop_pa = 25000
 velocity_m_per_s = np.sqrt(
     p_drop_pa * 2 * d_inner_m \
@@ -155,7 +163,7 @@ print(f"Water flow is {flow_l_per_min:.1f} l/min or {flow_kg_per_s:.2f} kg/s")
 We can try to verify it by calculating the pressure drop again.
 
 
-```
+```python
 p_drop_estimated = friction.one_phase_dP(
     m=flow_kg_per_s,
     rho=water.density,
@@ -177,7 +185,7 @@ f(Q) = \Delta P - \Delta P(Q) = 0
 $$
 
 
-```
+```python
 def function_to_solve(x_as_flow_l_per_min):
     flow_kg_per_s = x_as_flow_l_per_min / 60 / 1000 * water.density
     return p_drop_pa - friction.one_phase_dP(
@@ -193,7 +201,7 @@ def function_to_solve(x_as_flow_l_per_min):
 Then, we can use the solver in `SciPy` package to solve the eqation.
 
 
-```
+```python
 solution = root_scalar(f=function_to_solve, x0=flow_l_per_min, x1=flow_l_per_min * 0.99)
 print(f"The accurate answer is {solution.root:.2f} l/min")
 ```
@@ -214,7 +222,11 @@ Given the following pipe fittings and pipe, calculate the pressure drop of the p
 - 90<sup>o</sup> bend: bend diameter 457mm
 - Valve: Gate valve with \\(Cv=24000\\)
 
-=============== Answer ===============
+
+<p style="text-align: center;">
+============== Answer ==============
+</p>
+
 
 We will calculate the pressure drop for the pipe and calculate K value for each fitting or
 valve to calculate the pressure drop with the following formula.
@@ -233,7 +245,7 @@ $$
 
 
 
-```
+```python
 liquid_methane = Fluid(FluidsList.Methane).with_state(
     Input.pressure(1e5), Input.temperature(-163)
 )

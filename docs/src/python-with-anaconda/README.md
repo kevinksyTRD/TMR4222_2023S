@@ -60,4 +60,21 @@ It will create a folder named `TMR4222_2023S` in your `desired_folder_to_clone_t
 If you don't have `git` installed, you can install it from [here](https://git-scm.com/downloads).
 
 ## Set up the environment
+When you cloned the repository or downloaded it and unzipped it, you will see a file named 
+`conda_env.yaml`. You need to import this file to your Anaconda environment. To do so, open
+`Anaconda-Navigator` and click on `Environments` in the side bar. 
+Then click on `Import` button and select the file in the dialog box. Give a name to the environment
+such as `TMR4222`. Then click on `Import` button. It will take a while to create the environment.
+
+After it is done, go to your main page of `Anaconda-Navigator` and select the created environment
+from the drop-down menu. Then click on `Launch` button to open `JupyterLab`. It will open a
+browser window. You can navigate to the folder where you cloned the repository and open the
+notebooks.
+
+![Anaconda Navigator Screen Shot](../img/anaconda_import_env.png)
+![Anaconda Navigator Screen Shot](../img/anaconda_set_env_start_jupyter.png)
+
 ## Resources
+[Github repository](https://github.com/kevinksyTRD/TMR4222_2023S.git)
+[Anaconda documentation](https://docs.anaconda.com/anaconda/)
+[JupyterLab documentation](https://jupyterlab.readthedocs.io/en/stable/)

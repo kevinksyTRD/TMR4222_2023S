@@ -22,13 +22,13 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['script',
       {
-        type: '"text/javascript async" async',
+        type: "text/javascript",
         src: "https://polyfill.io/v3/polyfill.js?features=es6"
       }
     ],
     ['script',
       {
-        type: '"text/javascript async" async',
+        type: "text/javascript",
         src: "https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"
       }
     ]
@@ -57,18 +57,8 @@ module.exports = {
         collapsable: false
       },
       {
-        title: 'Jupyter Notebook',
-        path: '/jupyter-notebook/',
-        collapsable: false
-      },
-      {
-        title: 'Fluids Package',
+        title: 'Pipe Friction',
         path: '/fluids/',
-        collapsable: false
-      },
-      {
-        title: 'Pump Analysis',
-        path: '/pump-analysis/',
         collapsable: false
       },
       {
@@ -76,6 +66,11 @@ module.exports = {
         path: '/pipe-network-analysis/',
         collapsable: false
       },
+      {
+        title: 'Pump Theory',
+        path: '/pump-theory/',
+        collapsable: false
+      }
     ]
   },
 
