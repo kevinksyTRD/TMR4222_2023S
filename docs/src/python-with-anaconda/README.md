@@ -61,8 +61,9 @@ If you don't have `git` installed, you can install it from [here](https://git-sc
 
 ## Set up the environment
 When you cloned the repository or downloaded it and unzipped it, you will see a file named 
-`conda_env.yaml`. You need to import this file to your Anaconda environment. To do so, open
-`Anaconda-Navigator` and click on `Environments` in the side bar. 
+`conda_env.yaml` for Windows PC and `conda_env_mac.yaml` for Mac. You need to import one of this file 
+to your Anaconda environment.
+To do so, open `Anaconda-Navigator` and click on `Environments` in the side bar. 
 Then click on `Import` button and select the file in the dialog box. Give a name to the environment
 such as `TMR4222`. Then click on `Import` button. It will take a while to create the environment.
 
