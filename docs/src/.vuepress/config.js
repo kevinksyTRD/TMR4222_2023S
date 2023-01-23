@@ -67,8 +67,8 @@ module.exports = {
         collapsable: false
       },
       {
-        title: 'Pump Theory',
-        path: '/pump-theory/',
+        title: 'Pump Performance',
+        path: '/pump-performance/',
         collapsable: false
       }
     ]
