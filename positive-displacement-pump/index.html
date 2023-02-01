@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Displacement Pump Performance | TMR4222 Marine Machinery - Viscous Flow in Pipes</title>
+    <meta name="generator" content="VuePress 1.9.8">
+    <script type="text/javascript" src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+    <meta name="description" content="Documentation for TMR4222 Viscous Flow in Pipe">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/TMR4222_2023S/assets/css/0.styles.4543153c.css" as="style"><link rel="preload" href="/TMR4222_2023S/assets/js/app.4abb8553.js" as="script"><link rel="preload" href="/TMR4222_2023S/assets/js/2.2891b1df.js" as="script"><link rel="preload" href="/TMR4222_2023S/assets/js/17.ce1966c7.js" as="script"><link rel="prefetch" href="/TMR4222_2023S/assets/js/10.2f61165d.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/11.2d18e7c2.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/12.3587cb85.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/13.f4be4253.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/14.25aae0a8.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/15.9724357a.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/16.b87e2b3e.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/3.2051a86c.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/4.56bc5be8.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/5.c3e09589.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/6.ff7d345b.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/7.703bd4b0.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/8.6b2ef9ff.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/9.8906a95d.js">
+    <link rel="stylesheet" href="/TMR4222_2023S/assets/css/0.styles.4543153c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/TMR4222_2023S/" class="home-link router-link-active"><!----> <span class="site-name">TMR4222 Marine Machinery - Viscous Flow in Pipes</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/TMR4222_2023S/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/TMR4222_2023S/python-with-anaconda/" class="sidebar-link">Python with Anaconda</a></li><li><a href="/TMR4222_2023S/numerical-method-python/" class="sidebar-link">Numerical method in Python</a></li><li><a href="/TMR4222_2023S/pipe-friction/" class="sidebar-link">Pipe Friction</a></li><li><a href="/TMR4222_2023S/pipe-network-analysis/" class="sidebar-link">Pipe Network Analysis</a></li><li><a href="/TMR4222_2023S/pump-performance/" class="sidebar-link">Pump Performance</a></li><li><a href="/TMR4222_2023S/pump-control/" class="sidebar-link">Pump Control</a></li><li><a href="/TMR4222_2023S/positive-displacement-pump/" aria-current="page" class="active sidebar-link">Positive Displacement Pump</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/TMR4222_2023S/positive-displacement-pump/#_1-volumetric-efficiency" class="sidebar-link">1. Volumetric Efficiency</a></li><li class="sidebar-sub-header"><a href="/TMR4222_2023S/positive-displacement-pump/#displacement-pump-performance-2" class="sidebar-link">Displacement Pump Performance</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="displacement-pump-performance"><a href="#displacement-pump-performance" class="header-anchor">#</a> Displacement Pump Performance</h1> <p>First, we will import the necessary packages to solve the problems.</p> <div class="language- extra-class"><pre class="language-text"><code>import numpy as np
+</code></pre></div><h2 id="_1-volumetric-efficiency"><a href="#_1-volumetric-efficiency" class="header-anchor">#</a> 1. Volumetric Efficiency</h2> <p>A pump having a volumetric efficiency of 96% delivers 29 liter per minute of oil at 1000 RPM. What is the volumetric displacement of the pump?</p> <p>============== Answer ==============</p> <p>We will use the following equations to get the answers.</p> <p>$$
+\eta_{v} = \frac{Q_A}{Q_T}
+$$</p> <p>$$
+Q_T = V_D \cdot N
+$$</p> <p>$$
+V_D = \frac{Q_A}{\eta_v N}
+$$</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># Following is given from the problem:</span>
+vol_flow_liter_per_min <span class="token operator">=</span> <span class="token number">29</span>
+efficiency_vol <span class="token operator">=</span> <span class="token number">0.96</span>
+speed_rpm <span class="token operator">=</span> <span class="token number">1000</span>
+vol_disp_liter <span class="token operator">=</span> vol_flow_liter_per_min <span class="token operator">/</span> efficiency_vol <span class="token operator">/</span> speed_rpm
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Volumetric displacement: </span><span class="token interpolation"><span class="token punctuation">{</span>vol_disp_liter<span class="token punctuation">:</span><span class="token format-spec">.4f</span><span class="token punctuation">}</span></span><span class="token string">L&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Volumetric displacement: 0.0302L
+</code></pre></div><h2 id="displacement-pump-performance-2"><a href="#displacement-pump-performance-2" class="header-anchor">#</a> Displacement Pump Performance</h2> <p>A pump has a displacement volume of 100 cm<sup>3</sup>. It delivers 0.0152 m<sup>3</sup>/s of oil at 1000 RPM and 70 bar. If the prime mover input torque is 124.3Nm. What is the overall efficiency of the pump? What is the theoretical torque required to operate the pump?</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># Solution</span>
+vol_disp_m3 <span class="token operator">=</span> <span class="token number">100e-6</span>
+vol_flow_m3_per_s <span class="token operator">=</span> <span class="token number">0.00152</span>
+speed_rpm <span class="token operator">=</span> <span class="token number">1000</span>
+pressure_pump_pa <span class="token operator">=</span> <span class="token number">70e5</span>
+torque_shaft_nm <span class="token operator">=</span> <span class="token number">124.3</span>
+
+<span class="token comment"># Overall efficiency</span>
+speed_rad_per_s <span class="token operator">=</span> speed_rpm <span class="token operator">/</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">*</span> np<span class="token punctuation">.</span>pi
+efficiency_overall <span class="token operator">=</span> pressure_pump_pa <span class="token operator">*</span> vol_flow_m3_per_s <span class="token operator">/</span> <span class="token punctuation">(</span>torque_shaft_nm <span class="token operator">*</span> speed_rad_per_s<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The overall efficiency of the pump is </span><span class="token interpolation"><span class="token punctuation">{</span>efficiency_overall<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Volumetric / mechanical efficiency</span>
+efficiency_vol <span class="token operator">=</span> vol_flow_m3_per_s <span class="token operator">/</span> <span class="token punctuation">(</span>vol_disp_m3 <span class="token operator">*</span> speed_rpm <span class="token operator">/</span> <span class="token number">60</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The volume efficiency of the pump is </span><span class="token interpolation"><span class="token punctuation">{</span>efficiency_vol<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+efficiency_mech <span class="token operator">=</span> efficiency_overall <span class="token operator">/</span> efficiency_vol
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The mechanical efficiency of the pump is </span><span class="token interpolation"><span class="token punctuation">{</span>efficiency_mech<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+torque_ideal_nm <span class="token operator">=</span> torque_shaft_nm <span class="token operator">/</span> efficiency_mech
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The ideal torque is </span><span class="token interpolation"><span class="token punctuation">{</span>torque_ideal_nm<span class="token punctuation">:</span><span class="token format-spec">.1f</span><span class="token punctuation">}</span></span><span class="token string">Nm&quot;</span></span><span class="token punctuation">)</span>
+
+</code></pre></div><div class="language- extra-class"><pre><code>The overall efficiency of the pump is 0.817
+The volume efficiency of the pump is 0.912
+The mechanical efficiency of the pump is 0.896
+The ideal torque is 138.7Nm
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/TMR4222_2023S/pump-control/" class="prev">
+        Pump Control
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/TMR4222_2023S/assets/js/app.4abb8553.js" defer></script><script src="/TMR4222_2023S/assets/js/2.2891b1df.js" defer></script><script src="/TMR4222_2023S/assets/js/17.ce1966c7.js" defer></script>
+  </body>
+</html>

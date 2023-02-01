@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pipe friction calculation | TMR4222 Marine Machinery - Viscous Flow in Pipes</title>
+    <meta name="generator" content="VuePress 1.9.8">
+    <script type="text/javascript" src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+    <meta name="description" content="Documentation for TMR4222 Viscous Flow in Pipe">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/TMR4222_2023S/assets/css/0.styles.4543153c.css" as="style"><link rel="preload" href="/TMR4222_2023S/assets/js/app.4abb8553.js" as="script"><link rel="preload" href="/TMR4222_2023S/assets/js/2.2891b1df.js" as="script"><link rel="preload" href="/TMR4222_2023S/assets/js/16.b87e2b3e.js" as="script"><link rel="prefetch" href="/TMR4222_2023S/assets/js/10.2f61165d.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/11.2d18e7c2.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/12.3587cb85.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/13.f4be4253.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/14.25aae0a8.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/15.9724357a.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/17.ce1966c7.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/3.2051a86c.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/4.56bc5be8.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/5.c3e09589.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/6.ff7d345b.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/7.703bd4b0.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/8.6b2ef9ff.js"><link rel="prefetch" href="/TMR4222_2023S/assets/js/9.8906a95d.js">
+    <link rel="stylesheet" href="/TMR4222_2023S/assets/css/0.styles.4543153c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/TMR4222_2023S/" class="home-link router-link-active"><!----> <span class="site-name">TMR4222 Marine Machinery - Viscous Flow in Pipes</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/TMR4222_2023S/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/TMR4222_2023S/python-with-anaconda/" class="sidebar-link">Python with Anaconda</a></li><li><a href="/TMR4222_2023S/numerical-method-python/" class="sidebar-link">Numerical method in Python</a></li><li><a href="/TMR4222_2023S/pipe-friction/" aria-current="page" class="active sidebar-link">Pipe Friction</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/TMR4222_2023S/pipe-friction/#_1-water-flow" class="sidebar-link">1. Water flow</a></li><li class="sidebar-sub-header"><a href="/TMR4222_2023S/pipe-friction/#_2-find-flow-from-the-pressure-drop" class="sidebar-link">2. Find flow from the pressure drop</a></li><li class="sidebar-sub-header"><a href="/TMR4222_2023S/pipe-friction/#_3-friction-from-pipe-fittings-and-valves" class="sidebar-link">3. Friction from pipe fittings and valves</a></li></ul></li><li><a href="/TMR4222_2023S/pipe-network-analysis/" class="sidebar-link">Pipe Network Analysis</a></li><li><a href="/TMR4222_2023S/pump-performance/" class="sidebar-link">Pump Performance</a></li><li><a href="/TMR4222_2023S/pump-control/" class="sidebar-link">Pump Control</a></li><li><a href="/TMR4222_2023S/positive-displacement-pump/" class="sidebar-link">Positive Displacement Pump</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="pipe-friction-calculation"><a href="#pipe-friction-calculation" class="header-anchor">#</a> Pipe friction calculation</h1> <p>First, we will import the necessary packages to solve the problems.</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> fluids <span class="token keyword">import</span> friction<span class="token punctuation">,</span> core<span class="token punctuation">,</span> fittings
+<span class="token keyword">from</span> fluids<span class="token punctuation">.</span>piping <span class="token keyword">import</span> nearest_pipe
+<span class="token keyword">from</span> pyfluids <span class="token keyword">import</span> Fluid<span class="token punctuation">,</span> FluidsList<span class="token punctuation">,</span> Input
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> scipy<span class="token punctuation">.</span>optimize <span class="token keyword">import</span> root_scalar
+</code></pre></div><h2 id="_1-water-flow"><a href="#_1-water-flow" class="header-anchor">#</a> 1. Water flow</h2> <p>Water at 30<sup>o</sup>C flows through a 20m length of 50mm steel pipe (smooth wall) of Sch. 40 at a flow rate of 200 liter per min. Calculate the Reynolds number and friction factor. What is the pressure drop and head loss in the pipe?</p> <p style="text-align:center;">
+============== Answer ==============
+</p> <p>We will use the following equations to get the answers.</p> <p>$$
+\text{Re} _d = \frac{\rho V D}{\mu}
+$$</p> <p>$$
+h_f = \frac{1}{2g} \frac{V^2}{D}
+$$</p> <p>The density (\(\rho\)) and dynamic viscosity (\(\mu\)) of water can be obtained using <code>pyfluids</code> package which is a wrapper for <code>CoolProp</code>.</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># Following is given from the problem:</span>
+temp_water_deg_C <span class="token operator">=</span> <span class="token number">30</span>
+length_pipe_m <span class="token operator">=</span> <span class="token number">20</span>
+nominal_diamter_m <span class="token operator">=</span> <span class="token number">0.05</span>
+pipe_schedule <span class="token operator">=</span> <span class="token string">&quot;40&quot;</span>
+flow_l_per_min <span class="token operator">=</span> <span class="token number">200</span>
+roughness <span class="token operator">=</span> friction<span class="token punctuation">.</span>material_roughness<span class="token punctuation">(</span><span class="token string">&quot;clean steel pipe&quot;</span><span class="token punctuation">)</span>
+grav_acc_m_per_s2 <span class="token operator">=</span> <span class="token number">9.81</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Roughness of the pipe is </span><span class="token interpolation"><span class="token punctuation">{</span>roughness<span class="token punctuation">:</span><span class="token format-spec">.6f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># First, let's define our water</span>
+water <span class="token operator">=</span> Fluid<span class="token punctuation">(</span>FluidsList<span class="token punctuation">.</span>Water<span class="token punctuation">)</span><span class="token punctuation">.</span>with_state<span class="token punctuation">(</span>
+    Input<span class="token punctuation">.</span>pressure<span class="token punctuation">(</span><span class="token number">1e5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Input<span class="token punctuation">.</span>temperature<span class="token punctuation">(</span>temp_water_deg_C<span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment"># Calculate the inner diameter of the pipe</span>
+nps<span class="token punctuation">,</span> d_inner_m<span class="token punctuation">,</span> d_outer_m<span class="token punctuation">,</span> thickness_m <span class="token operator">=</span> nearest_pipe<span class="token punctuation">(</span>Di<span class="token operator">=</span><span class="token number">0.05</span><span class="token punctuation">,</span> schedule<span class="token operator">=</span><span class="token string">&quot;40&quot;</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The inner diameter of the pipe is: </span><span class="token interpolation"><span class="token punctuation">{</span>d_inner_m<span class="token punctuation">:</span><span class="token format-spec">.4f</span><span class="token punctuation">}</span></span><span class="token string">m&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Calculate the velocity from the flow and the diameter</span>
+flow_m3_per_s <span class="token operator">=</span> flow_l_per_min <span class="token operator">/</span> <span class="token number">60</span> <span class="token operator">/</span> <span class="token number">1e3</span>
+area_pipe_m2 <span class="token operator">=</span> d_inner_m <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">*</span> np<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">4</span>
+velocity_m_per_s <span class="token operator">=</span> flow_m3_per_s <span class="token operator">/</span> area_pipe_m2
+
+<span class="token comment"># Calculate Reynolds number</span>
+re <span class="token operator">=</span> water<span class="token punctuation">.</span>density <span class="token operator">*</span> velocity_m_per_s <span class="token operator">*</span> d_inner_m <span class="token operator">/</span> water<span class="token punctuation">.</span>dynamic_viscosity
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Re = </span><span class="token interpolation"><span class="token punctuation">{</span>re<span class="token punctuation">:</span><span class="token format-spec">.1f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Let's try the API</span>
+re_api <span class="token operator">=</span> core<span class="token punctuation">.</span>Reynolds<span class="token punctuation">(</span>
+    V<span class="token operator">=</span>velocity_m_per_s<span class="token punctuation">,</span> D<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span> rho<span class="token operator">=</span>water<span class="token punctuation">.</span>density<span class="token punctuation">,</span> mu<span class="token operator">=</span>water<span class="token punctuation">.</span>dynamic_viscosity
+<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Re = </span><span class="token interpolation"><span class="token punctuation">{</span>re_api<span class="token punctuation">:</span><span class="token format-spec">.1f</span><span class="token punctuation">}</span></span><span class="token string"> from fluids API&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Calulcate friction factor</span>
+fric_factor <span class="token operator">=</span> friction<span class="token punctuation">.</span>friction_factor<span class="token punctuation">(</span>Re<span class="token operator">=</span>re<span class="token punctuation">,</span> eD<span class="token operator">=</span>roughness<span class="token operator">/</span>d_inner_m<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Friction factor is </span><span class="token interpolation"><span class="token punctuation">{</span>fric_factor<span class="token punctuation">:</span><span class="token format-spec">.4f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Calculate pressure drop and head loss with Darcy-Weibach equation</span>
+head_loss <span class="token operator">=</span> fric_factor \
+    <span class="token operator">*</span> <span class="token number">1</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> grav_acc_m_per_s2<span class="token punctuation">)</span> \
+    <span class="token operator">*</span> velocity_m_per_s<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">/</span> d_inner_m \
+    <span class="token operator">*</span> length_pipe_m
+p_drop <span class="token operator">=</span> water<span class="token punctuation">.</span>density <span class="token operator">*</span> grav_acc_m_per_s2 <span class="token operator">*</span> head_loss
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Head loss is </span><span class="token interpolation"><span class="token punctuation">{</span>head_loss<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> m&quot;</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;pressure drop is </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string"> Pa&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Roughness of the pipe is 0.000150
+The inner diameter of the pipe is: 0.0525m
+Re = 101000.2
+Re = 101000.2 from fluids API
+Friction factor is 0.0271
+Head loss is 1.25 m
+pressure drop is 12230 Pa
+</code></pre></div><p>We can try an API from <code>fluids</code> to get the same answer .</p> <div class="language-python extra-class"><pre class="language-python"><code>mass_flow_kg_per_s <span class="token operator">=</span> flow_m3_per_s <span class="token operator">*</span> water<span class="token punctuation">.</span>density
+p_drop <span class="token operator">=</span> friction<span class="token punctuation">.</span>one_phase_dP<span class="token punctuation">(</span>
+    m<span class="token operator">=</span>mass_flow_kg_per_s<span class="token punctuation">,</span>
+    rho<span class="token operator">=</span>water<span class="token punctuation">.</span>density<span class="token punctuation">,</span>
+    mu<span class="token operator">=</span>water<span class="token punctuation">.</span>dynamic_viscosity<span class="token punctuation">,</span>
+    D<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span>
+    roughness<span class="token operator">=</span>roughness<span class="token punctuation">,</span>
+    L<span class="token operator">=</span>length_pipe_m
+<span class="token punctuation">)</span>
+head_loss <span class="token operator">=</span> p_drop <span class="token operator">/</span> <span class="token punctuation">(</span>water<span class="token punctuation">.</span>density <span class="token operator">*</span> grav_acc_m_per_s2<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Pressure drop from API is: </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string"> Pa&quot;</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Head loss from API is: </span><span class="token interpolation"><span class="token punctuation">{</span>head_loss<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string"> m&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Pressure drop from API is: 12230 Pa
+Head loss from API is: 1.252 m
+</code></pre></div><h2 id="_2-find-flow-from-the-pressure-drop"><a href="#_2-find-flow-from-the-pressure-drop" class="header-anchor">#</a> 2. Find flow from the pressure drop</h2> <p>We measured the pressure drop of the pipe and we found it to be 25000 Pa. What is the flow in the pipe?</p> <p style="text-align:center;">
+============== Answer ==============
+</p> <p>Finding flow from the pressure drop is not a trivial problem because the function to solve is non-linear implicit equation.</p> <p>$$
+\Delta p = f_d\left(\mathrm{Re}_D\right) \frac{\rho}{2} \frac{V^2}{D_i} \cdot L
+$$</p> <p>$$
+\text{Re} _d = \frac{\rho V D}{\mu}
+$$</p> <p>$$
+Q = V \cdot A = \frac{\pi D^2}{4} V
+$$</p> <p>First, we will try with an assumption that the friction factor is constant as the Re is quite high.</p> <p>$$
+V = \sqrt{\Delta p \cdot \frac{2D_i}{f_d \rho L} }
+$$</p> <div class="language-python extra-class"><pre class="language-python"><code>p_drop_pa <span class="token operator">=</span> <span class="token number">25000</span>
+velocity_m_per_s <span class="token operator">=</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>
+    p_drop_pa <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">*</span> d_inner_m \
+    <span class="token operator">/</span> <span class="token punctuation">(</span>fric_factor <span class="token operator">*</span> water<span class="token punctuation">.</span>density <span class="token operator">*</span> length_pipe_m<span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+flow_m3_per_s <span class="token operator">=</span> velocity_m_per_s <span class="token operator">*</span> area_pipe_m2
+flow_l_per_min <span class="token operator">=</span> flow_m3_per_s <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000</span>
+flow_kg_per_s <span class="token operator">=</span> flow_m3_per_s <span class="token operator">*</span> water<span class="token punctuation">.</span>density
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Water flow is </span><span class="token interpolation"><span class="token punctuation">{</span>flow_l_per_min<span class="token punctuation">:</span><span class="token format-spec">.1f</span><span class="token punctuation">}</span></span><span class="token string"> l/min or </span><span class="token interpolation"><span class="token punctuation">{</span>flow_kg_per_s<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> kg/s&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Water flow is 285.9 l/min or 4.74 kg/s
+</code></pre></div><p>We can try to verify it by calculating the pressure drop again.</p> <div class="language-python extra-class"><pre class="language-python"><code>p_drop_estimated <span class="token operator">=</span> friction<span class="token punctuation">.</span>one_phase_dP<span class="token punctuation">(</span>
+    m<span class="token operator">=</span>flow_kg_per_s<span class="token punctuation">,</span>
+    rho<span class="token operator">=</span>water<span class="token punctuation">.</span>density<span class="token punctuation">,</span>
+    mu<span class="token operator">=</span>water<span class="token punctuation">.</span>dynamic_viscosity<span class="token punctuation">,</span>
+    D<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span>
+    roughness<span class="token operator">=</span>roughness<span class="token punctuation">,</span>
+    L<span class="token operator">=</span>length_pipe_m
+<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Presure drop calculated back is </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop_estimated<span class="token punctuation">:</span><span class="token format-spec">.1f</span><span class="token punctuation">}</span></span><span class="token string"> Pa&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Presure drop calculated back is 24649.6 Pa
+</code></pre></div><p>This may be close enough. However, we can get more accurate solution by solving the equation numerically. First, we define the function that is the equation to solve.</p> <p>$$
+f(Q) = \Delta P - \Delta P(Q) = 0
+$$</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">def</span> <span class="token function">function_to_solve</span><span class="token punctuation">(</span>x_as_flow_l_per_min<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    flow_kg_per_s <span class="token operator">=</span> x_as_flow_l_per_min <span class="token operator">/</span> <span class="token number">60</span> <span class="token operator">/</span> <span class="token number">1000</span> <span class="token operator">*</span> water<span class="token punctuation">.</span>density
+    <span class="token keyword">return</span> p_drop_pa <span class="token operator">-</span> friction<span class="token punctuation">.</span>one_phase_dP<span class="token punctuation">(</span>
+        m<span class="token operator">=</span>flow_kg_per_s<span class="token punctuation">,</span>
+        rho<span class="token operator">=</span>water<span class="token punctuation">.</span>density<span class="token punctuation">,</span>
+        mu<span class="token operator">=</span>water<span class="token punctuation">.</span>dynamic_viscosity<span class="token punctuation">,</span>
+        D<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span>
+        roughness<span class="token operator">=</span>roughness<span class="token punctuation">,</span>
+        L<span class="token operator">=</span>length_pipe_m
+    <span class="token punctuation">)</span>
+</code></pre></div><p>Then, we can use the solver in <code>SciPy</code> package to solve the eqation.</p> <div class="language-python extra-class"><pre class="language-python"><code>solution <span class="token operator">=</span> root_scalar<span class="token punctuation">(</span>f<span class="token operator">=</span>function_to_solve<span class="token punctuation">,</span> x0<span class="token operator">=</span>flow_l_per_min<span class="token punctuation">,</span> x1<span class="token operator">=</span>flow_l_per_min <span class="token operator">*</span> <span class="token number">0.99</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;The accurate answer is </span><span class="token interpolation"><span class="token punctuation">{</span>solution<span class="token punctuation">.</span>root<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> l/min&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>The accurate answer is 288.00 l/min
+</code></pre></div><h2 id="_3-friction-from-pipe-fittings-and-valves"><a href="#_3-friction-from-pipe-fittings-and-valves" class="header-anchor">#</a> 3. Friction from pipe fittings and valves</h2> <p>Given the following pipe fittings and pipe, calculate the pressure drop of the pipe section.</p> <ul><li>fluid: methane at -163 <sup>o</sup>C and 1 bar</li> <li>flow: 9000 m<sup>3</sup>/h</li> <li>nominal pipe diameter: 450mm,</li> <li>Clean stainless steel pipe</li> <li>pipe schedule: 80s</li> <li>pipe length: 24m</li> <li>90<sup>o</sup> bend: bend diameter 457mm</li> <li>Valve: Gate valve with \(Cv=24000\)</li></ul> <p style="text-align:center;">
+============== Answer ==============
+</p> <p>We will calculate the pressure drop for the pipe and calculate K value for each fitting or
+valve to calculate the pressure drop with the following formula.</p> <p>$$
+K=\frac{\Delta p}{0.5 \rho V^2}
+$$</p> <p>$$
+\sum \Delta p = \Delta p_{\text{pipe}} + {0.5 \rho V^2} \sum K
+$$</p> <p>$$
+K=1.6 \times 10^9 \frac{D^4}{\left(K_v / 1.56\right)^2}
+$$</p> <div class="language-python extra-class"><pre class="language-python"><code>liquid_methane <span class="token operator">=</span> Fluid<span class="token punctuation">(</span>FluidsList<span class="token punctuation">.</span>Methane<span class="token punctuation">)</span><span class="token punctuation">.</span>with_state<span class="token punctuation">(</span>
+    Input<span class="token punctuation">.</span>pressure<span class="token punctuation">(</span><span class="token number">1e5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Input<span class="token punctuation">.</span>temperature<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">163</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Liquid methane: \n\t&quot;</span></span>
+      <span class="token string-interpolation"><span class="token string">f&quot;density: </span><span class="token interpolation"><span class="token punctuation">{</span>liquid_methane<span class="token punctuation">.</span>density<span class="token punctuation">}</span></span><span class="token string"> kg/m3\n\t&quot;</span></span>
+      <span class="token string-interpolation"><span class="token string">f&quot;dynamic viscosity: </span><span class="token interpolation"><span class="token punctuation">{</span>liquid_methane<span class="token punctuation">.</span>dynamic_viscosity<span class="token punctuation">:</span><span class="token format-spec">.3e</span><span class="token punctuation">}</span></span><span class="token string"> Pa s&quot;</span></span><span class="token punctuation">)</span>
+
+flow_m3_per_h <span class="token operator">=</span> <span class="token number">9000</span>
+roughness <span class="token operator">=</span> friction<span class="token punctuation">.</span>material_roughness<span class="token punctuation">(</span><span class="token string">&quot;clean stainless steel pipe&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;Roughness of the pipe is </span><span class="token interpolation"><span class="token punctuation">{</span>roughness<span class="token punctuation">:</span><span class="token format-spec">.3e</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+nps<span class="token punctuation">,</span> d_inner_m<span class="token punctuation">,</span> d_outer_m<span class="token punctuation">,</span> thickness_m <span class="token operator">=</span> nearest_pipe<span class="token punctuation">(</span>Di<span class="token operator">=</span><span class="token number">0.45</span><span class="token punctuation">,</span> schedule<span class="token operator">=</span><span class="token string">&quot;80&quot;</span><span class="token punctuation">)</span>
+length_pipe_m <span class="token operator">=</span> <span class="token number">24</span>
+bend_radius_m <span class="token operator">=</span> <span class="token number">0.457</span>
+c_v_valvue <span class="token operator">=</span> <span class="token number">24000</span>
+
+<span class="token comment"># We need Reynods number to calculate K for the bend</span>
+area_pipe_section <span class="token operator">=</span> np<span class="token punctuation">.</span>pi <span class="token operator">*</span> d_inner_m<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">/</span> <span class="token number">4</span>
+velocity_m_per_s <span class="token operator">=</span> flow_m3_per_h <span class="token operator">/</span> <span class="token number">3600</span> <span class="token operator">/</span> area_pipe_section
+re <span class="token operator">=</span> liquid_methane<span class="token punctuation">.</span>density <span class="token operator">*</span> velocity_m_per_s <span class="token operator">*</span> d_inner_m \
+    <span class="token operator">/</span> liquid_methane<span class="token punctuation">.</span>dynamic_viscosity
+
+<span class="token comment"># get the K value for the bend</span>
+k_bend <span class="token operator">=</span> fittings<span class="token punctuation">.</span>bend_rounded<span class="token punctuation">(</span>
+    Di<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span>
+    angle<span class="token operator">=</span><span class="token number">90</span><span class="token punctuation">,</span>
+    rc<span class="token operator">=</span>bend_radius_m<span class="token punctuation">,</span>
+    Re<span class="token operator">=</span>re<span class="token punctuation">,</span>
+    roughness<span class="token operator">=</span>roughness
+<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;K for the bend is </span><span class="token interpolation"><span class="token punctuation">{</span>k_bend<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Convert Cv to K for the valvue</span>
+k_valve <span class="token operator">=</span> <span class="token number">1.6e9</span> <span class="token operator">*</span> d_inner_m<span class="token operator">**</span><span class="token number">4</span> <span class="token operator">/</span> <span class="token punctuation">(</span>c_v_valvue <span class="token operator">/</span> <span class="token number">1.1561</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;K for the valve is </span><span class="token interpolation"><span class="token punctuation">{</span>k_valve<span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">)</span>
+<span class="token comment"># We can also use the prebuilt function</span>
+k_valve_api <span class="token operator">=</span> fittings<span class="token punctuation">.</span>Cv_to_K<span class="token punctuation">(</span>Cv<span class="token operator">=</span>c_v_valvue<span class="token punctuation">,</span> D<span class="token operator">=</span>d_inner_m<span class="token punctuation">)</span>
+<span class="token keyword">assert</span> np<span class="token punctuation">.</span>isclose<span class="token punctuation">(</span>k_valve<span class="token punctuation">,</span> k_valve_api<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string-interpolation"><span class="token string">f&quot;The values are different </span><span class="token interpolation"><span class="token punctuation">{</span>k_valve<span class="token punctuation">}</span></span><span class="token string"> vs </span><span class="token interpolation"><span class="token punctuation">{</span>k_valve_api<span class="token punctuation">}</span></span><span class="token string">&quot;</span></span>
+
+<span class="token comment"># Calculate the pressure drop for each</span>
+flow_kg_per_s <span class="token operator">=</span> flow_m3_per_h <span class="token operator">/</span> <span class="token number">3600</span> <span class="token operator">*</span> liquid_methane<span class="token punctuation">.</span>density
+p_drop_pipe <span class="token operator">=</span> friction<span class="token punctuation">.</span>one_phase_dP<span class="token punctuation">(</span>
+    m<span class="token operator">=</span>flow_kg_per_s<span class="token punctuation">,</span>
+    rho<span class="token operator">=</span>liquid_methane<span class="token punctuation">.</span>density<span class="token punctuation">,</span>
+    mu<span class="token operator">=</span>liquid_methane<span class="token punctuation">.</span>dynamic_viscosity<span class="token punctuation">,</span>
+    D<span class="token operator">=</span>d_inner_m<span class="token punctuation">,</span>
+    roughness<span class="token operator">=</span>roughness<span class="token punctuation">,</span>
+    L<span class="token operator">=</span>length_pipe_m
+<span class="token punctuation">)</span>
+p_drop_bend <span class="token operator">=</span> k_bend <span class="token operator">*</span> <span class="token number">0.5</span> <span class="token operator">*</span> liquid_methane<span class="token punctuation">.</span>density <span class="token operator">*</span> velocity_m_per_s<span class="token operator">**</span><span class="token number">2</span>
+p_drop_valve <span class="token operator">=</span> k_valve <span class="token operator">*</span> <span class="token number">0.5</span> <span class="token operator">*</span> liquid_methane<span class="token punctuation">.</span>density <span class="token operator">*</span> velocity_m_per_s<span class="token operator">**</span><span class="token number">2</span>
+p_drop_total <span class="token operator">=</span> p_drop_pipe <span class="token operator">+</span> p_drop_bend <span class="token operator">+</span> p_drop_valve
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;Pressure drop [Pa]:\n\t&quot;</span>
+      <span class="token string-interpolation"><span class="token string">f&quot;pipe: </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop_pipe<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string">\n\t&quot;</span></span>
+      <span class="token string-interpolation"><span class="token string">f&quot;bend: </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop_bend<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string">\n\t&quot;</span></span>
+      <span class="token string-interpolation"><span class="token string">f&quot;valve: </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop_valve<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string">\n\t&quot;</span></span>
+      <span class="token string-interpolation"><span class="token string">f&quot;total: </span><span class="token interpolation"><span class="token punctuation">{</span>p_drop_total<span class="token punctuation">:</span><span class="token format-spec">.0f</span><span class="token punctuation">}</span></span><span class="token string">\n\t&quot;</span></span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre><code>Liquid methane: 
+	density: 424.5701316256901 kg/m3
+	dynamic viscosity: 1.210e-04 Pa s
+Roughness of the pipe is 1.500e-04
+K for the bend is 0.276
+K for the valve is 0.160
+Pressure drop [Pa]:
+	pipe: 40138
+	bend: 13761
+	valve: 7986
+	total: 61885
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/TMR4222_2023S/numerical-method-python/" class="prev">
+        Numerical method in Python
+      </a></span> <span class="next"><a href="/TMR4222_2023S/pipe-network-analysis/">
+        Pipe Network Analysis
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/TMR4222_2023S/assets/js/app.4abb8553.js" defer></script><script src="/TMR4222_2023S/assets/js/2.2891b1df.js" defer></script><script src="/TMR4222_2023S/assets/js/16.b87e2b3e.js" defer></script>
+  </body>
+</html>
