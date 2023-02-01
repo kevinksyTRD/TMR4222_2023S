@@ -28,7 +28,7 @@ V_D = \frac{Q_A}{\eta_v N}
 $$
 
 
-```
+```python
 # Following is given from the problem:
 vol_flow_liter_per_min = 29
 efficiency_vol = 0.96
@@ -45,7 +45,7 @@ print(f"Volumetric displacement: {vol_disp_liter:.4f}L")
 A pump has a displacement volume of 100 cm<sup>3</sup>. It delivers 0.0152 m<sup>3</sup>/s of oil at 1000 RPM and 70 bar. If the prime mover input torque is 124.3Nm. What is the overall efficiency of the pump? What is the theoretical torque required to operate the pump?
 
 
-```
+```python
 # Solution
 vol_disp_m3 = 100e-6
 vol_flow_m3_per_s = 0.00152
