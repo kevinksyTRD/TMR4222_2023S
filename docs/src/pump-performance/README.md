@@ -776,8 +776,3 @@ fig.show(renderer="svg")
 ![svg](../img/03_Centrifugal_Pump_Performance_31_0.svg)
     
 
-
-
-```python
-
-```

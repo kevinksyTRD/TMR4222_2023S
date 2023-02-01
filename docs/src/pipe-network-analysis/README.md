@@ -65,12 +65,15 @@ We can assign the causality to the branches.
 
 Then, we can start writing the equations in the following form.
 
-\begin{align}
+$$
+\begin{aligned}
 p_{n1} = f_1(p_{n1}, p_{n2})\\
 p_{n2} = f_2(p_{n1}, p_{n2})
-\end{align}
+\end{aligned}
+$$
 
-\begin{align}
+$$
+\begin{aligned}
 p_{n1} & = p_{n2} + \Delta p (Q_3)\\
        & Q_3 = Q_1 + Q_2\\
        & Q_1 = Q_1\left(p_{b1} - p_{n1}\right)\\
@@ -79,7 +82,8 @@ p_{n2} & = p_{b3} - \Delta p (Q_4)\\
        & Q_4 = Q_6 - Q_3 - Q_5\\
        & Q_6 = Q_{fb1}\\
        & Q_5 = Q_5\left(p_{b4} - p_{n2}\right)
-\end{align}
+\end{aligned}
+$$
 
 First, we will make a function that calculates pressure drop with a given flow.
 
@@ -136,7 +140,7 @@ for index, p_each in enumerate(p_init):
     Initial pressure for nodes [Pa]:
     	1 - 176914
     	2 - 175648
-    
+
 
 We will define the flow function for a pipe section as well. It has to be solved by a numerical solver to get the exact solution.
 
@@ -232,5 +236,4 @@ print(f"Back pressure at the flow boundary is {p_fb1:.3f} Pa.")
     	5 - 0.520
     	6 - 1.500
     Back pressure at the flow boundary is 171526.170 Pa.
-    
 

@@ -57,8 +57,13 @@ module.exports = {
         collapsable: false
       },
       {
+        title: 'Numerical method in Python',
+        path: '/numerical-method-python/',
+        collapsable: false
+      },
+      {
         title: 'Pipe Friction',
-        path: '/fluids/',
+        path: '/pipe-friction/',
         collapsable: false
       },
       {
@@ -69,6 +74,16 @@ module.exports = {
       {
         title: 'Pump Performance',
         path: '/pump-performance/',
+        collapsable: false
+      },
+      {
+        title: 'Pump Control',
+        path: '/pump-control/',
+        collapsable: false
+      },
+      {
+        title: 'Positive Displacement Pump',
+        path: '/positive-displacement-pump/',
         collapsable: false
       }
     ]
